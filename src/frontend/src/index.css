@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Pamona Freelance — deep dark / purple-blue */
+    --background: 0.09 0.02 270;
+    --foreground: 0.95 0.01 270;
+
+    --card: 0.13 0.03 270;
+    --card-foreground: 0.95 0.01 270;
+
+    --popover: 0.13 0.03 270;
+    --popover-foreground: 0.95 0.01 270;
+
+    --primary: 0.65 0.22 290;
+    --primary-foreground: 0.98 0.005 270;
+
+    --secondary: 0.17 0.04 270;
+    --secondary-foreground: 0.95 0.01 270;
+
+    --muted: 0.17 0.04 270;
+    --muted-foreground: 0.6 0.06 270;
+
+    --accent: 0.6 0.25 260;
+    --accent-foreground: 0.98 0.005 270;
+
+    --destructive: 0.6 0.2 25;
+    --destructive-foreground: 0.98 0.01 0;
+
+    --border: 0.22 0.05 270;
+    --input: 0.17 0.04 270;
+    --ring: 0.65 0.22 290;
+
+    /* Custom tokens */
+    --purple: 0.65 0.22 290;
+    --blue: 0.6 0.25 260;
+    --purple-glow: 0.7 0.2 290;
+    --dark-bg: 0.09 0.02 270;
+    --dark-card: 0.13 0.03 270;
+    --dark-mid: 0.17 0.04 270;
+    --text-muted-c: 0.6 0.06 270;
+    --text-body-c: 0.85 0.02 270;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-purple-accent {
+    color: oklch(var(--purple));
+  }
+  .text-blue-accent {
+    color: oklch(var(--blue));
+  }
+  .bg-dark-card {
+    background-color: oklch(var(--dark-card));
+  }
+  .bg-dark-mid {
+    background-color: oklch(var(--dark-mid));
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--purple)),
+      oklch(var(--blue))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--purple)),
+      oklch(var(--blue))
+    );
+  }
+
+  .purple-glow {
+    text-shadow: 0 0 60px oklch(var(--purple-glow) / 0.4);
+  }
+
+  .card-hover:hover {
+    box-shadow: 0 0 0 1px oklch(var(--purple) / 0.3), 0 8px 32px
+      oklch(var(--purple) / 0.12);
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pulse-ring {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 oklch(var(--purple) / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 16px oklch(var(--purple) / 0);
+    }
+  }
+
+  .anim-fade-up {
+    animation: fadeUp 0.7s ease-out both;
+  }
+  .anim-fade-up-1 {
+    animation: fadeUp 0.7s ease-out 0.15s both;
+  }
+  .anim-fade-up-2 {
+    animation: fadeUp 0.7s ease-out 0.30s both;
+  }
+  .anim-fade-up-3 {
+    animation: fadeUp 0.7s ease-out 0.45s both;
+  }
+  .anim-fade-in {
+    animation: fadeIn 0.9s ease-out both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade-up,
+    .anim-fade-up-1,
+    .anim-fade-up-2,
+    .anim-fade-up-3,
+    .anim-fade-in {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
