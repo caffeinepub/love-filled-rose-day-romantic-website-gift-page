@@ -64,8 +64,15 @@ export default {
           border: 'oklch(var(--border))',
           ring: 'oklch(var(--ring))'
         },
-        navy: 'oklch(var(--navy))',
-        'navy-dark': 'oklch(var(--navy-dark))',
+        /* Cherry red tokens — cherry = primary brand color */
+        cherry: {
+          DEFAULT: 'oklch(var(--cherry) / <alpha-value>)',
+          dark: 'oklch(var(--cherry-dark) / <alpha-value>)',
+          mid: 'oklch(var(--cherry-mid) / <alpha-value>)'
+        },
+        /* navy is aliased to cherry for backward compat with existing classnames */
+        navy: 'oklch(var(--cherry) / <alpha-value>)',
+        'navy-dark': 'oklch(var(--cherry-dark) / <alpha-value>)',
         gold: 'oklch(var(--gold))'
       },
       fontFamily: {
@@ -78,7 +85,7 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       boxShadow: {
-        'navy': '0 4px 24px oklch(0.33 0.13 260 / 0.2)',
+        'navy': '0 4px 24px oklch(0.45 0.20 20 / 0.25)',
         'gold': '0 4px 24px oklch(0.72 0.14 75 / 0.3)',
       },
       keyframes: {

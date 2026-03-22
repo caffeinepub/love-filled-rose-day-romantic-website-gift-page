@@ -475,7 +475,7 @@ export default function App() {
                         setForm((p) => ({ ...p, name: e.target.value }))
                       }
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/20 transition"
+                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-cherry focus:ring-2 focus:ring-cherry/20 transition"
                       data-ocid="contact.input"
                     />
                   </div>
@@ -495,7 +495,7 @@ export default function App() {
                         setForm((p) => ({ ...p, phone: e.target.value }))
                       }
                       placeholder="Enter your phone number"
-                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/20 transition"
+                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-cherry focus:ring-2 focus:ring-cherry/20 transition"
                       data-ocid="contact.input"
                     />
                   </div>
@@ -515,7 +515,7 @@ export default function App() {
                         setForm((p) => ({ ...p, message: e.target.value }))
                       }
                       placeholder="Describe your travel requirements…"
-                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/20 transition resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-cherry focus:ring-2 focus:ring-cherry/20 transition resize-none"
                       data-ocid="contact.textarea"
                     />
                   </div>

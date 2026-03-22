@@ -8,44 +8,44 @@
   :root {
     --radius: 0.625rem;
 
-    /* Shree Sharneshwar Travels — Deep Blue + Gold/Saffron */
-    --background: 0.98 0.004 260;
-    --foreground: 0.18 0.05 260;
+    /* Shree Sharneshwar Travels — Cherry Red + White */
+    --background: 1 0 0;
+    --foreground: 0.18 0.06 15;
 
-    --card: 1 0 0;
-    --card-foreground: 0.18 0.05 260;
+    --card: 0.99 0.005 15;
+    --card-foreground: 0.18 0.06 15;
 
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.05 260;
+    --popover-foreground: 0.18 0.06 15;
 
-    /* Deep blue #0b3d91 → oklch ~0.33 0.13 260 */
-    --primary: 0.33 0.13 260;
-    --primary-foreground: 0.98 0.004 260;
+    /* Cherry red #c0152a → oklch ~0.45 0.20 20 */
+    --primary: 0.45 0.2 20;
+    --primary-foreground: 1 0 0;
 
-    --secondary: 0.92 0.02 260;
-    --secondary-foreground: 0.33 0.13 260;
+    --secondary: 0.96 0.01 15;
+    --secondary-foreground: 0.45 0.2 20;
 
-    --muted: 0.94 0.015 260;
-    --muted-foreground: 0.5 0.05 260;
+    --muted: 0.96 0.012 15;
+    --muted-foreground: 0.52 0.05 15;
 
-    /* Gold/saffron #d4a017 → oklch ~0.72 0.14 75 */
+    /* Gold/saffron accent */
     --accent: 0.72 0.14 75;
-    --accent-foreground: 0.18 0.05 260;
+    --accent-foreground: 0.18 0.06 15;
 
-    --destructive: 0.58 0.22 25;
-    --destructive-foreground: 0.98 0.01 0;
+    --destructive: 0.45 0.2 20;
+    --destructive-foreground: 1 0 0;
 
-    --border: 0.88 0.025 260;
-    --input: 0.92 0.02 260;
-    --ring: 0.33 0.13 260;
+    --border: 0.9 0.02 15;
+    --input: 0.95 0.015 15;
+    --ring: 0.45 0.2 20;
 
     /* Custom semantic tokens */
-    --navy: 0.33 0.13 260;
-    --navy-dark: 0.22 0.1 260;
-    --navy-mid: 0.42 0.13 260;
+    --cherry: 0.45 0.2 20;
+    --cherry-dark: 0.32 0.18 20;
+    --cherry-mid: 0.55 0.18 20;
     --gold: 0.72 0.14 75;
     --gold-light: 0.82 0.12 75;
-    --teal: 0.55 0.12 195;
+    --rose-light: 0.92 0.04 15;
   }
 
   * {
@@ -77,13 +77,13 @@
     color: oklch(var(--gold));
   }
   .text-navy {
-    color: oklch(var(--navy));
+    color: oklch(var(--cherry));
   }
   .bg-navy {
-    background-color: oklch(var(--navy));
+    background-color: oklch(var(--cherry));
   }
   .bg-navy-dark {
-    background-color: oklch(var(--navy-dark));
+    background-color: oklch(var(--cherry-dark));
   }
   .bg-gold {
     background-color: oklch(var(--gold));
@@ -92,9 +92,9 @@
   .hero-gradient {
     background: linear-gradient(
       135deg,
-      oklch(var(--navy-dark)) 0%,
-      oklch(var(--navy)) 45%,
-      oklch(var(--teal)) 100%
+      oklch(var(--cherry-dark)) 0%,
+      oklch(var(--cherry)) 50%,
+      oklch(0.55 0.15 30) 100%
     );
   }
 
@@ -111,16 +111,23 @@
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: oklch(var(--gold));
+    color: oklch(var(--cherry));
   }
 
   .card-service {
     transition: box-shadow 0.25s ease, transform 0.25s ease;
   }
   .card-service:hover {
-    box-shadow: 0 12px 36px oklch(var(--navy) / 0.12), 0 0 0 2px
-      oklch(var(--gold) / 0.35);
+    box-shadow: 0 12px 36px oklch(var(--cherry) / 0.15), 0 0 0 2px
+      oklch(var(--cherry) / 0.35);
     transform: translateY(-4px);
+  }
+
+  .shadow-navy {
+    box-shadow: 0 4px 20px oklch(var(--cherry) / 0.25);
+  }
+  .shadow-gold {
+    box-shadow: 0 4px 20px oklch(var(--gold) / 0.35);
   }
 
   @keyframes floatUp {
