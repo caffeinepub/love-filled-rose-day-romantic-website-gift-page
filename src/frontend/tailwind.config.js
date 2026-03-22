@@ -48,27 +48,28 @@ export default {
           foreground: 'oklch(var(--card-foreground))'
         },
         chart: {
-          1: 'oklch(var(--chart-1))',
-          2: 'oklch(var(--chart-2))',
-          3: 'oklch(var(--chart-3))',
-          4: 'oklch(var(--chart-4))',
-          5: 'oklch(var(--chart-5))'
+          1: 'oklch(var(--chart-1, 0.6 0.15 260))',
+          2: 'oklch(var(--chart-2, 0.7 0.14 75))',
+          3: 'oklch(var(--chart-3, 0.55 0.12 195))',
+          4: 'oklch(var(--chart-4, 0.65 0.12 30))',
+          5: 'oklch(var(--chart-5, 0.7 0.1 140))'
         },
         sidebar: {
-          DEFAULT: 'oklch(var(--sidebar))',
-          foreground: 'oklch(var(--sidebar-foreground))',
-          primary: 'oklch(var(--sidebar-primary))',
-          'primary-foreground': 'oklch(var(--sidebar-primary-foreground))',
-          accent: 'oklch(var(--sidebar-accent))',
-          'accent-foreground': 'oklch(var(--sidebar-accent-foreground))',
-          border: 'oklch(var(--sidebar-border))',
-          ring: 'oklch(var(--sidebar-ring))'
+          DEFAULT: 'oklch(var(--primary))',
+          foreground: 'oklch(var(--primary-foreground))',
+          primary: 'oklch(var(--primary))',
+          'primary-foreground': 'oklch(var(--primary-foreground))',
+          accent: 'oklch(var(--accent))',
+          'accent-foreground': 'oklch(var(--accent-foreground))',
+          border: 'oklch(var(--border))',
+          ring: 'oklch(var(--ring))'
         },
-        'purple-accent': 'oklch(var(--purple))',
-        'blue-accent':   'oklch(var(--blue))'
+        navy: 'oklch(var(--navy))',
+        'navy-dark': 'oklch(var(--navy-dark))',
+        gold: 'oklch(var(--gold))'
       },
       fontFamily: {
-        display: ['Bricolage Grotesque', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
         sans:    ['Plus Jakarta Sans', 'sans-serif']
       },
       borderRadius: {
@@ -77,7 +78,8 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       boxShadow: {
-        'purple': '0 0 40px oklch(0.65 0.22 290 / 0.2)'
+        'navy': '0 4px 24px oklch(0.33 0.13 260 / 0.2)',
+        'gold': '0 4px 24px oklch(0.72 0.14 75 / 0.3)',
       },
       keyframes: {
         'accordion-down': {

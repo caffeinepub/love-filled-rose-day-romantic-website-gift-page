@@ -1,803 +1,645 @@
 import { Toaster } from "@/components/ui/sonner";
-import { OrbitControls } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { ArrowRight, ChevronDown, Mail, Menu, X } from "lucide-react";
+import {
+  Bus,
+  Car,
+  ChevronDown,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  Plane,
+  Send,
+  X,
+} from "lucide-react";
 import { motion, useInView } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
-import type { Mesh } from "three";
 
-/* ─────────────────────────────────────────────
-   3-D Sphere
-───────────────────────────────────────────── */
-function FloatingSphere() {
-  const meshRef = useRef<Mesh>(null);
-  useFrame(({ clock }) => {
-    if (meshRef.current) {
-      meshRef.current.position.y =
-        Math.sin(clock.getElapsedTime() * 0.6) * 0.18;
-    }
-  });
-  return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1.5, 64, 64]} />
-      <meshStandardMaterial
-        color="#7c3aed"
-        roughness={0.1}
-        metalness={0.6}
-        emissive="#4f46e5"
-        emissiveIntensity={0.4}
-      />
-    </mesh>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   Section Fade-In Wrapper
-───────────────────────────────────────────── */
+/* ── Section fade-in wrapper ── */
 function FadeIn({
   children,
   delay = 0,
-}: { children: React.ReactNode; delay?: number }) {
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
+      className={className}
+      initial={{ opacity: 0, y: 28 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   Stats
-───────────────────────────────────────────── */
-const STATS = [
-  { label: "Clients", value: "50+" },
-  { label: "Projects", value: "120+" },
-  { label: "Success Rate", value: "98%" },
-  { label: "Years", value: "5+" },
-];
-
-/* ─────────────────────────────────────────────
-   Services
-───────────────────────────────────────────── */
-const SERVICES = [
-  {
-    title: "Web Development",
-    desc: "High-performance websites with modern tech stacks that load fast and convert visitors.",
-    icon: "⚡",
-  },
-  {
-    title: "UI/UX Design",
-    desc: "Intuitive interfaces and seamless experiences that users love to interact with.",
-    icon: "🎨",
-  },
-  {
-    title: "Graphic Design",
-    desc: "Stunning visuals, illustrations, and design assets tailored to your brand identity.",
-    icon: "✦",
-  },
-  {
-    title: "Branding",
-    desc: "Complete brand identity systems — logos, palettes, typography, and guidelines.",
-    icon: "◈",
-  },
-];
-
-/* ─────────────────────────────────────────────
-   Portfolio
-───────────────────────────────────────────── */
-const PROJECTS = [
-  {
-    title: "Luxe Commerce",
-    tag: "E-Commerce",
-    gradient: "from-violet-600 to-purple-500",
-  },
-  {
-    title: "Momentum SaaS",
-    tag: "Web App",
-    gradient: "from-purple-600 to-blue-600",
-  },
-  {
-    title: "Verdant Studio",
-    tag: "Branding",
-    gradient: "from-blue-600 to-indigo-500",
-  },
-  {
-    title: "Pulse Analytics",
-    tag: "Dashboard",
-    gradient: "from-indigo-600 to-violet-600",
-  },
-  {
-    title: "Nova Agency",
-    tag: "Portfolio",
-    gradient: "from-violet-500 to-fuchsia-500",
-  },
-  {
-    title: "Apex Finance",
-    tag: "Web Design",
-    gradient: "from-fuchsia-600 to-purple-600",
-  },
-];
-
-/* ─────────────────────────────────────────────
-   Process
-───────────────────────────────────────────── */
-const PROCESS = ["Discover", "Design", "Develop", "Launch", "Grow"];
-
-/* ─────────────────────────────────────────────
-   Testimonials
-───────────────────────────────────────────── */
-const TESTIMONIALS = [
-  {
-    quote:
-      "Pamona completely transformed our online presence. The new site doubled our lead generation within 60 days.",
-    name: "Sarah Mitchell",
-    role: "CEO, Luxe Commerce",
-    initials: "SM",
-  },
-  {
-    quote:
-      "Exceptional design sensibility and technical execution. The team delivered beyond every expectation we had.",
-    name: "James Rivera",
-    role: "Founder, Momentum SaaS",
-    initials: "JR",
-  },
-  {
-    quote:
-      "Working with Pamona Freelance was the best investment we made. Professional, fast, and incredibly talented.",
-    name: "Priya Kapoor",
-    role: "CMO, Verdant Studio",
-    initials: "PK",
-  },
-];
-
-/* ─────────────────────────────────────────────
-   NAV LINKS
-───────────────────────────────────────────── */
-const NAV_LINKS = [
-  { label: "About", href: "#about" },
+/* ── Nav links ── */
+const NAV = [
+  { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
-/* ═════════════════════════════════════════════
-   APP
-═════════════════════════════════════════════ */
-export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [submitting, setSubmitting] = useState(false);
+/* ── Services data ── */
+const SERVICES = [
+  {
+    icon: Plane,
+    title: "Tour Packages",
+    desc: "Domestic and international tour packages at best prices. Customized itineraries for every budget.",
+    highlight: "Popular Choice",
+  },
+  {
+    icon: Car,
+    title: "Travel with Driver",
+    desc: "Comfortable travel with experienced, professional drivers. We provide safe and reliable cab services for all your travel needs.",
+    highlight: "Professional Driver",
+  },
+  {
+    icon: Bus,
+    title: "Transport Services",
+    desc: "Safe and reliable transport services for all your travel needs across India.",
+    highlight: "24/7 Available",
+  },
+];
 
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 2200);
-    return () => clearTimeout(t);
-  }, []);
+/* ═══════════════════════════════
+   APP
+═══════════════════════════════ */
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [sending, setSending] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitting(true);
+    setSending(true);
     setTimeout(() => {
-      setSubmitting(false);
-      setFormState({ name: "", email: "", message: "" });
-      toast.success("Message sent! We'll be in touch soon.");
+      setSending(false);
+      setForm({ name: "", phone: "", message: "" });
+      toast.success("Your enquiry has been sent! We'll contact you shortly.");
     }, 1400);
   }
 
-  /* ── Loading Screen ── */
-  if (loading) {
-    return (
-      <div className="fixed inset-0 flex flex-col items-center justify-center bg-background">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center gap-6"
-        >
-          {/* Animated logo mark */}
-          <div className="relative w-20 h-20">
-            <motion.div
-              className="absolute inset-0 rounded-full gradient-bg opacity-20"
-              animate={{ scale: [1, 1.4, 1] }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            />
-            <div className="absolute inset-0 rounded-full gradient-bg flex items-center justify-center">
-              <span className="text-3xl font-bold text-white font-display">
-                P
-              </span>
-            </div>
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight gradient-text font-display">
-            Pamona Freelance
-          </h1>
-          <motion.div
-            className="w-40 h-0.5 rounded-full gradient-bg"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1.6, delay: 0.3, ease: "easeInOut" }}
-          />
-        </motion.div>
-      </div>
-    );
-  }
-
-  /* ── Main App ── */
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Toaster position="top-right" />
 
-      {/* ── Navbar ── */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a
-            href="#hero"
-            className="text-xl font-bold gradient-text font-display tracking-tight"
-            data-ocid="nav.link"
-          >
-            Pamona Freelance
-          </a>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                data-ocid="nav.link"
-              >
-                {l.label}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              className="px-4 py-2 text-sm font-semibold rounded-full gradient-bg text-white hover:opacity-90 transition-opacity"
-              data-ocid="nav.primary_button"
-            >
-              Get Started
-            </a>
-          </nav>
+      {/* ══ HEADER ══ */}
+      <header className="bg-navy py-4 px-6" id="home">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Logo + Brand */}
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gold shadow-gold flex-shrink-0">
+              <img
+                src="/assets/uploads/IMG_20260322_054305-1.jpg"
+                alt="Sharneshwar deity"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h1 className="text-white font-display text-xl md:text-2xl font-bold leading-tight">
+                Shree Sharneshwar Travels
+              </h1>
+              <p className="text-gold text-xs md:text-sm font-medium tracking-wide">
+                Your Trusted Travel Partner
+              </p>
+            </div>
+          </div>
 
           {/* Mobile toggle */}
           <button
             type="button"
-            className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground"
+            className="md:hidden p-2 text-white hover:text-gold transition-colors"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label="Toggle menu"
             data-ocid="nav.toggle"
           >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+        </div>
+      </header>
+
+      {/* ══ NAV ══ */}
+      <nav className="sticky top-0 z-50 bg-foreground/90 backdrop-blur-sm shadow-navy">
+        {/* Desktop */}
+        <div className="max-w-7xl mx-auto px-6 hidden md:flex items-center gap-8 h-12">
+          {NAV.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              className="text-white/80 hover:text-gold text-sm font-medium tracking-wide transition-colors"
+              data-ocid="nav.link"
+            >
+              {l.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            className="ml-auto px-5 py-1.5 rounded-full bg-gold text-foreground text-sm font-bold hover:opacity-90 transition-opacity"
+            data-ocid="nav.primary_button"
+          >
+            Book Now
+          </a>
         </div>
 
         {/* Mobile menu */}
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-card border-b border-border px-6 py-4 flex flex-col gap-4"
+            className="md:hidden bg-foreground px-6 py-4 flex flex-col gap-3"
           >
-            {NAV_LINKS.map((l) => (
+            {NAV.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
-                className="text-sm text-muted-foreground hover:text-foreground"
                 onClick={() => setMenuOpen(false)}
+                className="text-white/80 hover:text-gold text-sm font-medium"
                 data-ocid="nav.link"
               >
                 {l.label}
               </a>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false);
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="mt-1 w-fit px-5 py-1.5 rounded-full bg-gold text-foreground text-sm font-bold"
+              data-ocid="nav.primary_button"
+            >
+              Book Now
+            </button>
           </motion.div>
         )}
-      </header>
+      </nav>
 
       <main>
-        {/* ── Hero ── */}
-        <section className="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden">
-          {/* 3-D canvas */}
-          <div className="absolute inset-0">
-            <Canvas camera={{ position: [0, 0, 5] }}>
-              <ambientLight intensity={0.6} />
-              <pointLight position={[10, 10, 10]} intensity={1.2} />
-              <pointLight
-                position={[-10, -10, -5]}
-                color="#4f46e5"
-                intensity={0.8}
-              />
-              <FloatingSphere />
-              <OrbitControls
-                enableZoom={false}
-                autoRotate
-                autoRotateSpeed={0.8}
-                enablePan={false}
-              />
-            </Canvas>
+        {/* ══ HERO ══ */}
+        <section
+          id="hero"
+          className="hero-gradient relative min-h-[90vh] flex flex-col items-center justify-center text-center px-6 py-24 overflow-hidden"
+        >
+          {/* Decorative circles */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full border border-white/10" />
+            <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full border border-gold/20" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white/5" />
           </div>
 
-          {/* Gradient overlay so text is readable */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background/80" />
-
-          {/* Hero content */}
-          <div className="relative z-10 max-w-4xl px-6">
+          <div className="relative z-10 max-w-3xl">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mx-auto mb-8 w-24 h-24 rounded-full overflow-hidden border-4 border-gold shadow-gold"
             >
-              <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest uppercase rounded-full border border-border text-muted-foreground">
-                Creative Digital Agency
-              </span>
+              <img
+                src="/assets/uploads/IMG_20260322_054305-1.jpg"
+                alt="Sharneshwar deity"
+                className="w-full h-full object-cover"
+              />
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="section-label mb-4"
+            >
+              Shree Sharneshwar Travels
+            </motion.p>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.8,
                 delay: 0.25,
+                duration: 0.7,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="text-5xl md:text-7xl font-bold leading-tight tracking-tight font-display purple-glow"
+              className="text-4xl md:text-6xl font-display font-bold text-white leading-tight"
             >
-              We Build{" "}
-              <span className="gradient-text">Digital Experiences</span> That
-              Drive Growth
-            </motion.h1>
+              Explore the World <span className="text-gold">with Us</span>
+            </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.4,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto"
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="mt-5 text-white/75 text-lg max-w-xl mx-auto"
             >
-              Creating websites is my passion — make my passion yours. Let's
-              craft something extraordinary together.
+              Comfortable and Affordable Travel Services across India and
+              beyond.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.55,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              transition={{ delay: 0.55, duration: 0.6 }}
+              className="mt-10 flex flex-wrap gap-4 justify-center"
             >
               <a
-                href="#portfolio"
-                className="px-7 py-3.5 rounded-full gradient-bg text-white font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity"
+                href="#contact"
+                className="px-8 py-3.5 rounded-full bg-gold text-foreground font-bold text-sm hover:opacity-90 transition-opacity shadow-gold"
                 data-ocid="hero.primary_button"
               >
-                View Our Work <ArrowRight size={16} />
+                Book Now
               </a>
               <a
-                href="#contact"
-                className="px-7 py-3.5 rounded-full border border-border text-foreground font-semibold hover:border-primary hover:text-primary transition-colors"
+                href="#services"
+                className="px-8 py-3.5 rounded-full border-2 border-white/40 text-white font-semibold text-sm hover:border-gold hover:text-gold transition-colors"
                 data-ocid="hero.secondary_button"
               >
-                Get Started
+                Our Services
               </a>
             </motion.div>
           </div>
 
-          {/* Scroll indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
           >
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
-            <ChevronDown size={16} className="animate-bounce" />
+            <span className="text-xs tracking-widest uppercase font-sans">
+              Scroll
+            </span>
+            <ChevronDown size={14} className="animate-bounce" />
           </motion.div>
         </section>
 
-        {/* ── About ── */}
-        <section id="about" className="py-28 px-6">
+        {/* ══ SERVICES ══ */}
+        <section id="services" className="py-24 px-6 bg-background">
           <div className="max-w-6xl mx-auto">
-            <FadeIn>
-              <div className="flex flex-col md:flex-row md:items-end gap-6 mb-16">
-                <div>
-                  <p className="text-sm font-semibold tracking-widest uppercase text-purple-accent mb-3">
-                    About Us
-                  </p>
-                  <h2 className="text-4xl md:text-5xl font-bold font-display">
-                    Who We Are
-                  </h2>
-                </div>
-                <p className="md:ml-auto max-w-md text-muted-foreground leading-relaxed">
-                  Pamona Freelance is a creative digital agency focused on
-                  building high-performance websites and stunning brand
-                  identities. We combine design, technology, and strategy to
-                  deliver results that matter.
-                </p>
-              </div>
+            <FadeIn className="text-center mb-14">
+              <p className="section-label mb-3">What We Offer</p>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                Our Services
+              </h2>
+              <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gold" />
             </FadeIn>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {STATS.map((stat, i) => (
-                <FadeIn key={stat.label} delay={i * 0.1}>
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -4 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="p-8 bg-card rounded-2xl border border-border text-center card-hover"
-                    data-ocid={`about.item.${i + 1}`}
-                  >
-                    <h3 className="text-4xl font-bold font-display gradient-text">
-                      {stat.value}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {stat.label}
-                    </p>
-                  </motion.div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Services ── */}
-        <section id="services" className="py-28 px-6 bg-card">
-          <div className="max-w-6xl mx-auto">
-            <FadeIn>
-              <div className="text-center mb-16">
-                <p className="text-sm font-semibold tracking-widest uppercase text-purple-accent mb-3">
-                  What We Do
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold font-display">
-                  Our Services
-                </h2>
-              </div>
-            </FadeIn>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-3 gap-8">
               {SERVICES.map((svc, i) => (
-                <FadeIn key={svc.title} delay={i * 0.1}>
-                  <motion.div
-                    whileHover={{ scale: 1.04, y: -6 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="p-8 bg-background rounded-2xl border border-border card-hover h-full"
+                <FadeIn key={svc.title} delay={i * 0.12}>
+                  <div
+                    className="card-service bg-card rounded-2xl border border-border p-8 flex flex-col gap-4 h-full shadow-sm"
                     data-ocid={`services.item.${i + 1}`}
                   >
-                    <span className="text-3xl block mb-4">{svc.icon}</span>
-                    <h3 className="text-lg font-semibold font-display mb-3">
+                    <div className="flex items-start justify-between">
+                      <div className="w-14 h-14 rounded-xl bg-navy flex items-center justify-center shadow-navy flex-shrink-0">
+                        <svc.icon size={26} className="text-white" />
+                      </div>
+                      <span className="text-xs font-bold text-gold bg-accent/10 border border-gold/30 rounded-full px-3 py-1">
+                        {svc.highlight}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-foreground">
                       {svc.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground text-sm leading-relaxed flex-1">
                       {svc.desc}
                     </p>
-                  </motion.div>
+                    <a
+                      href="#contact"
+                      className="text-navy font-semibold text-sm hover:text-gold transition-colors self-start"
+                      data-ocid={`services.item.${i + 1}`}
+                    >
+                      Enquire Now →
+                    </a>
+                  </div>
                 </FadeIn>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── Portfolio ── */}
-        <section id="portfolio" className="py-28 px-6">
+        {/* ══ ABOUT ══ */}
+        <section id="about" className="py-24 px-6 bg-muted">
           <div className="max-w-6xl mx-auto">
-            <FadeIn>
-              <div className="text-center mb-16">
-                <p className="text-sm font-semibold tracking-widest uppercase text-purple-accent mb-3">
-                  Our Work
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold font-display">
-                  Portfolio
-                </h2>
-              </div>
-            </FadeIn>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {PROJECTS.map((project, i) => (
-                <FadeIn key={project.title} delay={(i % 3) * 0.1}>
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`h-52 bg-gradient-to-br ${project.gradient} rounded-2xl flex flex-col items-start justify-end p-7 cursor-pointer overflow-hidden relative group`}
-                    data-ocid={`portfolio.item.${i + 1}`}
-                  >
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                    <div className="relative z-10">
-                      <span className="text-xs font-semibold uppercase tracking-widest text-white/70">
-                        {project.tag}
-                      </span>
-                      <h3 className="text-lg font-bold text-white font-display mt-1">
-                        {project.title}
-                      </h3>
-                    </div>
-                  </motion.div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Process ── */}
-        <section className="py-28 px-6 bg-card text-center">
-          <div className="max-w-4xl mx-auto">
-            <FadeIn>
-              <p className="text-sm font-semibold tracking-widest uppercase text-purple-accent mb-3">
-                How We Work
-              </p>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-14">
-                Our Process
-              </h2>
-            </FadeIn>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              {PROCESS.map((step, i) => (
-                <FadeIn key={step} delay={i * 0.08}>
-                  <motion.div
-                    whileHover={{ scale: 1.08, y: -3 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    className="flex items-center gap-3 px-7 py-3.5 rounded-full border border-border bg-background hover:border-primary/50 hover:bg-primary/5 cursor-default transition-colors"
-                    data-ocid={`process.item.${i + 1}`}
-                  >
-                    <span className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-white text-xs font-bold">
-                      {i + 1}
+            <div className="grid md:grid-cols-2 gap-14 items-center">
+              {/* Image side */}
+              <FadeIn delay={0.1}>
+                <div className="relative flex justify-center">
+                  <div className="w-72 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden border-4 border-gold shadow-gold">
+                    <img
+                      src="/assets/uploads/IMG_20260322_054305-1.jpg"
+                      alt="Sharneshwar deity temple"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Decorative block */}
+                  <div className="absolute -bottom-4 -right-4 md:-right-6 w-28 h-28 rounded-xl bg-navy flex flex-col items-center justify-center shadow-navy">
+                    <span className="text-gold font-display font-bold text-2xl leading-none">
+                      2+
                     </span>
-                    <span className="font-semibold">{step}</span>
-                  </motion.div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Testimonials ── */}
-        <section className="py-28 px-6">
-          <div className="max-w-6xl mx-auto">
-            <FadeIn>
-              <div className="text-center mb-16">
-                <p className="text-sm font-semibold tracking-widest uppercase text-purple-accent mb-3">
-                  Social Proof
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold font-display">
-                  What Clients Say
-                </h2>
-              </div>
-            </FadeIn>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {TESTIMONIALS.map((t, i) => (
-                <FadeIn key={t.name} delay={i * 0.12}>
-                  <motion.div
-                    whileHover={{ y: -6 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="p-8 bg-card rounded-2xl border border-border card-hover flex flex-col gap-6"
-                    data-ocid={`testimonials.item.${i + 1}`}
-                  >
-                    <span className="text-4xl text-purple-accent leading-none">
-                      &ldquo;
+                    <span className="text-white text-xs mt-1 text-center leading-tight">
+                      Years
+                      <br />
+                      of Experience
                     </span>
-                    <p className="text-muted-foreground leading-relaxed flex-1">
-                      {t.quote}
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Text side */}
+              <FadeIn delay={0.2}>
+                <p className="section-label mb-3">Who We Are</p>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6 leading-snug">
+                  About <span className="text-navy">Shree Sharneshwar</span>{" "}
+                  Travels
+                </h2>
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  Shree Sharneshwar Travels is a trusted travel agency with 2+
+                  years of experience, providing quality travel and tour
+                  services across India. Based in Sirohi, we offer comfortable
+                  journeys with professional drivers for all your travel needs.
+                </p>
+
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="p-5 bg-card rounded-xl border border-border shadow-sm">
+                    <p className="text-xs font-bold uppercase tracking-widest text-gold mb-1">
+                      Founder
                     </p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
-                        {t.initials}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-sm">{t.name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {t.role}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </FadeIn>
-              ))}
+                    <p className="font-display font-semibold text-foreground">
+                      Shaitan Singh Parmar
+                    </p>
+                  </div>
+                  <div className="p-5 bg-card rounded-xl border border-border shadow-sm">
+                    <p className="text-xs font-bold uppercase tracking-widest text-gold mb-1">
+                      CEO
+                    </p>
+                    <p className="font-display font-semibold text-foreground">
+                      Urmila Parmar
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-6">
+                  <div className="text-center">
+                    <p className="text-3xl font-display font-bold text-navy">
+                      2+
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Years Experience
+                    </p>
+                  </div>
+                  <div className="w-px bg-border" />
+                  <div className="text-center">
+                    <p className="text-3xl font-display font-bold text-navy">
+                      200+
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Destinations
+                    </p>
+                  </div>
+                  <div className="w-px bg-border" />
+                  <div className="text-center">
+                    <p className="text-3xl font-display font-bold text-navy">
+                      98%
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Satisfaction Rate
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
             </div>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="py-28 px-6 text-center gradient-bg relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-white blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-72 h-72 rounded-full bg-white blur-3xl" />
-          </div>
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <FadeIn>
-              <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-6">
-                Let's Build Something Extraordinary
-              </h2>
-              <p className="text-white/80 mb-10 text-lg">
-                Ready to take your digital presence to the next level? Let's
-                talk.
-              </p>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-purple-700 font-bold rounded-full hover:bg-white/90 transition-colors"
-                data-ocid="cta.primary_button"
-              >
-                Start Your Project <ArrowRight size={18} />
-              </a>
-            </FadeIn>
-          </div>
+        {/* ══ CTA BANNER ══ */}
+        <section className="bg-navy py-16 px-6 text-center">
+          <FadeIn>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+              Ready to Plan Your Dream Journey?
+            </h2>
+            <p className="text-white/70 mb-8 max-w-xl mx-auto">
+              Get in touch today and let us craft the perfect travel experience
+              for you and your family.
+            </p>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gold text-foreground font-bold text-sm hover:opacity-90 transition-opacity shadow-gold"
+              data-ocid="cta.primary_button"
+            >
+              Contact Us Today
+            </a>
+          </FadeIn>
         </section>
 
-        {/* ── Contact ── */}
-        <section id="contact" className="py-28 px-6">
-          <div className="max-w-4xl mx-auto">
-            <FadeIn>
-              <div className="mb-12">
-                <p className="text-sm font-semibold tracking-widest uppercase text-purple-accent mb-3">
-                  Get In Touch
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold font-display">
-                  Contact Us
-                </h2>
-              </div>
+        {/* ══ CONTACT ══ */}
+        <section id="contact" className="py-24 px-6 bg-background">
+          <div className="max-w-5xl mx-auto">
+            <FadeIn className="text-center mb-14">
+              <p className="section-label mb-3">Get In Touch</p>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                Contact Us
+              </h2>
+              <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gold" />
             </FadeIn>
 
             <div className="grid md:grid-cols-5 gap-12">
-              <div className="md:col-span-3">
-                <FadeIn delay={0.1}>
-                  <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col gap-4"
-                    data-ocid="contact.panel"
+              {/* Form */}
+              <FadeIn delay={0.1} className="md:col-span-3">
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-5"
+                  data-ocid="contact.panel"
+                >
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold text-foreground mb-1.5"
+                    >
+                      Your Name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={(e) =>
+                        setForm((p) => ({ ...p, name: e.target.value }))
+                      }
+                      placeholder="Enter your full name"
+                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/20 transition"
+                      data-ocid="contact.input"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-semibold text-foreground mb-1.5"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      required
+                      value={form.phone}
+                      onChange={(e) =>
+                        setForm((p) => ({ ...p, phone: e.target.value }))
+                      }
+                      placeholder="Enter your phone number"
+                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/20 transition"
+                      data-ocid="contact.input"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-semibold text-foreground mb-1.5"
+                    >
+                      Message / Travel Requirement
+                    </label>
+                    <textarea
+                      id="message"
+                      required
+                      rows={5}
+                      value={form.message}
+                      onChange={(e) =>
+                        setForm((p) => ({ ...p, message: e.target.value }))
+                      }
+                      placeholder="Describe your travel requirements…"
+                      className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/20 transition resize-none"
+                      data-ocid="contact.textarea"
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    disabled={sending}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="px-8 py-3.5 rounded-xl bg-navy text-white font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-60 shadow-navy"
+                    data-ocid="contact.submit_button"
                   >
-                    <div>
-                      <label
-                        htmlFor="contact-name"
-                        className="block text-sm font-medium mb-1.5"
-                      >
-                        Name
-                      </label>
-                      <input
-                        id="contact-name"
-                        type="text"
-                        required
-                        value={formState.name}
-                        onChange={(e) =>
-                          setFormState((p) => ({ ...p, name: e.target.value }))
-                        }
-                        placeholder="Your full name"
-                        className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition"
-                        data-ocid="contact.input"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="contact-email"
-                        className="block text-sm font-medium mb-1.5"
-                      >
-                        Email
-                      </label>
-                      <input
-                        id="contact-email"
-                        type="email"
-                        required
-                        value={formState.email}
-                        onChange={(e) =>
-                          setFormState((p) => ({ ...p, email: e.target.value }))
-                        }
-                        placeholder="you@example.com"
-                        className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition"
-                        data-ocid="contact.input"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="contact-message"
-                        className="block text-sm font-medium mb-1.5"
-                      >
-                        Message
-                      </label>
-                      <textarea
-                        id="contact-message"
-                        required
-                        rows={5}
-                        value={formState.message}
-                        onChange={(e) =>
-                          setFormState((p) => ({
-                            ...p,
-                            message: e.target.value,
-                          }))
-                        }
-                        placeholder="Tell us about your project…"
-                        className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition resize-none"
-                        data-ocid="contact.textarea"
-                      />
-                    </div>
-                    <motion.button
-                      type="submit"
-                      disabled={submitting}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="px-8 py-4 rounded-xl gradient-bg text-white font-semibold disabled:opacity-60 transition-opacity flex items-center justify-center gap-2"
-                      data-ocid="contact.submit_button"
-                    >
-                      {submitting ? (
-                        <>
-                          <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                          Sending…
-                        </>
-                      ) : (
-                        <>
-                          Send Message <ArrowRight size={16} />
-                        </>
-                      )}
-                    </motion.button>
-                  </form>
-                </FadeIn>
-              </div>
+                    {sending ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        <Send size={15} /> Send Enquiry
+                      </>
+                    )}
+                  </motion.button>
+                </form>
+              </FadeIn>
 
-              <div className="md:col-span-2 flex flex-col gap-8">
-                <FadeIn delay={0.2}>
-                  <div className="p-8 bg-card rounded-2xl border border-border">
-                    <h3 className="font-semibold font-display text-lg mb-4">
-                      Reach Out Directly
-                    </h3>
-                    <a
-                      href="mailto:pamonafreelance@gmail.com"
-                      className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors text-sm"
-                      data-ocid="contact.link"
-                    >
-                      <span className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center flex-shrink-0">
+              {/* Info cards */}
+              <FadeIn delay={0.2} className="md:col-span-2 flex flex-col gap-5">
+                <div className="p-6 bg-card rounded-2xl border border-border shadow-sm">
+                  <h3 className="font-display font-bold text-foreground text-lg mb-5">
+                    Office Details
+                  </h3>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-full bg-navy flex items-center justify-center flex-shrink-0">
+                        <MapPin size={14} className="text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gold uppercase tracking-wide mb-0.5">
+                          Office Location
+                        </p>
+                        <p className="text-foreground font-medium">
+                          Sirohi, Rajasthan
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-full bg-navy flex items-center justify-center flex-shrink-0">
+                        <Phone size={14} className="text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gold uppercase tracking-wide mb-0.5">
+                          Phone
+                        </p>
+                        <a
+                          href="tel:9001808314"
+                          className="text-foreground font-medium hover:text-navy transition-colors"
+                          data-ocid="contact.link"
+                        >
+                          9001808314
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-full bg-navy flex items-center justify-center flex-shrink-0">
                         <Mail size={14} className="text-white" />
-                      </span>
-                      pamonafreelance@gmail.com
-                    </a>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gold uppercase tracking-wide mb-0.5">
+                          Email
+                        </p>
+                        <p className="text-foreground font-medium">
+                          sharneshwartravels@gmail.com
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-8 bg-card rounded-2xl border border-border">
-                    <h3 className="font-semibold font-display text-lg mb-2">
-                      Response Time
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      We typically respond within 24 hours on business days.
-                    </p>
-                  </div>
-                </FadeIn>
-              </div>
+                </div>
+
+                <div className="p-6 bg-navy rounded-2xl shadow-navy">
+                  <p className="text-gold font-bold font-display text-lg mb-2">
+                    Shree Sharneshwar
+                  </p>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    2+ years of trusted travel and tour services. Let the
+                    blessings of Sharneshwar guide your every journey.
+                  </p>
+                </div>
+              </FadeIn>
             </div>
           </div>
         </section>
       </main>
 
-      {/* ── Footer ── */}
-      <footer className="py-10 text-center bg-card border-t border-border">
-        <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Pamona Freelance. All rights reserved.
-        </p>
-        <p className="mt-2 text-xs text-muted-foreground/60">
-          Built with love using{" "}
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
-          >
-            caffeine.ai
-          </a>
-        </p>
+      {/* ══ FOOTER ══ */}
+      <footer className="bg-navy-dark py-8 px-6 text-center">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gold">
+              <img
+                src="/assets/uploads/IMG_20260322_054305-1.jpg"
+                alt="Sharneshwar"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-white font-display font-bold">
+              Shree Sharneshwar Travels
+            </span>
+          </div>
+          <p className="text-white/60 text-sm mb-1">
+            © {new Date().getFullYear()} Shree Sharneshwar Travels. All rights
+            reserved.
+          </p>
+          <p className="text-white/40 text-xs">
+            Built with ❤️ using{" "}
+            <a
+              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gold transition-colors"
+            >
+              caffeine.ai
+            </a>
+          </p>
+        </div>
       </footer>
     </div>
   );

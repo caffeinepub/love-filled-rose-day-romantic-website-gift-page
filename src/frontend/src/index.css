@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,46 +6,46 @@
 
 @layer base {
   :root {
-    --radius: 0.75rem;
+    --radius: 0.625rem;
 
-    /* Pamona Freelance — deep dark / purple-blue */
-    --background: 0.09 0.02 270;
-    --foreground: 0.95 0.01 270;
+    /* Shree Sharneshwar Travels — Deep Blue + Gold/Saffron */
+    --background: 0.98 0.004 260;
+    --foreground: 0.18 0.05 260;
 
-    --card: 0.13 0.03 270;
-    --card-foreground: 0.95 0.01 270;
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.05 260;
 
-    --popover: 0.13 0.03 270;
-    --popover-foreground: 0.95 0.01 270;
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.05 260;
 
-    --primary: 0.65 0.22 290;
-    --primary-foreground: 0.98 0.005 270;
+    /* Deep blue #0b3d91 → oklch ~0.33 0.13 260 */
+    --primary: 0.33 0.13 260;
+    --primary-foreground: 0.98 0.004 260;
 
-    --secondary: 0.17 0.04 270;
-    --secondary-foreground: 0.95 0.01 270;
+    --secondary: 0.92 0.02 260;
+    --secondary-foreground: 0.33 0.13 260;
 
-    --muted: 0.17 0.04 270;
-    --muted-foreground: 0.6 0.06 270;
+    --muted: 0.94 0.015 260;
+    --muted-foreground: 0.5 0.05 260;
 
-    --accent: 0.6 0.25 260;
-    --accent-foreground: 0.98 0.005 270;
+    /* Gold/saffron #d4a017 → oklch ~0.72 0.14 75 */
+    --accent: 0.72 0.14 75;
+    --accent-foreground: 0.18 0.05 260;
 
-    --destructive: 0.6 0.2 25;
+    --destructive: 0.58 0.22 25;
     --destructive-foreground: 0.98 0.01 0;
 
-    --border: 0.22 0.05 270;
-    --input: 0.17 0.04 270;
-    --ring: 0.65 0.22 290;
+    --border: 0.88 0.025 260;
+    --input: 0.92 0.02 260;
+    --ring: 0.33 0.13 260;
 
-    /* Custom tokens */
-    --purple: 0.65 0.22 290;
-    --blue: 0.6 0.25 260;
-    --purple-glow: 0.7 0.2 290;
-    --dark-bg: 0.09 0.02 270;
-    --dark-card: 0.13 0.03 270;
-    --dark-mid: 0.17 0.04 270;
-    --text-muted-c: 0.6 0.06 270;
-    --text-body-c: 0.85 0.02 270;
+    /* Custom semantic tokens */
+    --navy: 0.33 0.13 260;
+    --navy-dark: 0.22 0.1 260;
+    --navy-mid: 0.42 0.13 260;
+    --gold: 0.72 0.14 75;
+    --gold-light: 0.82 0.12 75;
+    --teal: 0.55 0.12 195;
   }
 
   * {
@@ -68,105 +68,72 @@
   h4,
   h5,
   h6 {
-    font-family: "Bricolage Grotesque", sans-serif;
+    font-family: "Playfair Display", serif;
   }
 }
 
 @layer utilities {
-  .text-purple-accent {
-    color: oklch(var(--purple));
+  .text-gold {
+    color: oklch(var(--gold));
   }
-  .text-blue-accent {
-    color: oklch(var(--blue));
+  .text-navy {
+    color: oklch(var(--navy));
   }
-  .bg-dark-card {
-    background-color: oklch(var(--dark-card));
+  .bg-navy {
+    background-color: oklch(var(--navy));
   }
-  .bg-dark-mid {
-    background-color: oklch(var(--dark-mid));
+  .bg-navy-dark {
+    background-color: oklch(var(--navy-dark));
   }
-
-  .gradient-text {
-    background: linear-gradient(
-      135deg,
-      oklch(var(--purple)),
-      oklch(var(--blue))
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .bg-gold {
+    background-color: oklch(var(--gold));
   }
 
-  .gradient-bg {
+  .hero-gradient {
     background: linear-gradient(
       135deg,
-      oklch(var(--purple)),
-      oklch(var(--blue))
+      oklch(var(--navy-dark)) 0%,
+      oklch(var(--navy)) 45%,
+      oklch(var(--teal)) 100%
     );
   }
 
-  .purple-glow {
-    text-shadow: 0 0 60px oklch(var(--purple-glow) / 0.4);
+  .gold-underline {
+    text-decoration: underline;
+    text-decoration-color: oklch(var(--gold));
+    text-underline-offset: 6px;
+    text-decoration-thickness: 3px;
   }
 
-  .card-hover:hover {
-    box-shadow: 0 0 0 1px oklch(var(--purple) / 0.3), 0 8px 32px
-      oklch(var(--purple) / 0.12);
+  .section-label {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: oklch(var(--gold));
   }
 
-  @keyframes fadeUp {
+  .card-service {
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .card-service:hover {
+    box-shadow: 0 12px 36px oklch(var(--navy) / 0.12), 0 0 0 2px
+      oklch(var(--gold) / 0.35);
+    transform: translateY(-4px);
+  }
+
+  @keyframes floatUp {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(28px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  @keyframes pulse-ring {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 oklch(var(--purple) / 0.4);
-    }
-    50% {
-      box-shadow: 0 0 0 16px oklch(var(--purple) / 0);
-    }
-  }
-
-  .anim-fade-up {
-    animation: fadeUp 0.7s ease-out both;
-  }
-  .anim-fade-up-1 {
-    animation: fadeUp 0.7s ease-out 0.15s both;
-  }
-  .anim-fade-up-2 {
-    animation: fadeUp 0.7s ease-out 0.30s both;
-  }
-  .anim-fade-up-3 {
-    animation: fadeUp 0.7s ease-out 0.45s both;
-  }
-  .anim-fade-in {
-    animation: fadeIn 0.9s ease-out both;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .anim-fade-up,
-    .anim-fade-up-1,
-    .anim-fade-up-2,
-    .anim-fade-up-3,
-    .anim-fade-in {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
+  .anim-float-up {
+    animation: floatUp 0.7s ease-out both;
   }
 }
